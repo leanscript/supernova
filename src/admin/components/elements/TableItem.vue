@@ -1,6 +1,6 @@
 <template>
   <tr
-    class="focus:outline-none border border-gray-100 cursor-pointer rounded hover:bg-sn-transparent transition">
+    class="focus:outline-none border border-gray-100 dark:border-slate-900 cursor-pointer rounded hover:bg-sn-transparent transition">
     <td v-if="selectable" @click="selectLine">
       <div class="ml-5">
         <div
@@ -18,13 +18,13 @@
     <slot />
     <td class="pl-4 flex justify-center my-2">
       <router-link v-if="!relation && detailBtn" :to="itemDetails" class="font-bold detail-btn">
-        <EyeIcon class="font-bold fill-gray-400 hover:fill-sn-secondary w-6 h-6 mx-1" />
+        <EyeIcon class="font-bold fill-gray-400 hover:fill-sn-accent w-6 h-6 mx-1" />
         <div class="relative">
           <div
             style="margin-left: -2.2rem"
             class="absolute z-40 opacity-100 bottom-100 mb-2 left-0 min-w-full -mt-6 detail-btn-tooltip hidden transition duration-150 ease-out">
             <div class="relative shadow-md">
-              <div class="bg-sn-secondary -mt-8 text-white truncate text-xs rounded py-2 px-4">
+              <div class="bg-sn-secondary border-1 -mt-8 text-sn-text truncate text-xs rounded-md py-2 px-4">
                 Voir le détail
               </div>
             </div>
@@ -33,13 +33,13 @@
       </router-link>
 
       <router-link v-if="editBtn" :to="itemEdit" class="font-bold edit-btn">
-        <Cog8ToothIcon class="font-bold fill-gray-400 hover:fill-sn-secondary w-6 h-6 mx-1" />
+        <Cog8ToothIcon class="font-bold fill-gray-400 hover:fill-sn-accent w-6 h-6 mx-1" />
         <div class="relative">
           <div
             style="margin-left: -2.2rem"
             class="absolute z-40 opacity-100 bottom-100 mb-2 left-0 min-w-full -mt-6 edit-btn-tooltip hidden transition duration-150 ease-out">
             <div class="relative shadow-md">
-              <div class="bg-sn-secondary -mt-8 text-white truncate text-xs rounded py-2 px-4">
+              <div class="bg-sn-secondary border-1 -mt-8 text-sn-text truncate text-xs rounded-md py-2 px-4">
                 Modifier
               </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="to"
-    :class="`text-white hover:bg-sn-accent-lighter transition group flex items-center px-2 py-2 font-medium rounded-md ${linkIsActive}`">
+    :class="`text-sn-text hover:bg-sn-accent-lighter transition group flex items-center px-2 py-2 font-medium rounded-md ${linkIsActive}`">
     <slot />
     {{ title }}
   </router-link>

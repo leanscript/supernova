@@ -1,5 +1,5 @@
 <template>
-  <td class="whitespace-nowrap pl-4 pr-3 text-gray-800 sm:pl-6">
+  <td class="whitespace-nowrap pl-4 pr-3 dark:text-gray-100 text-gray-800 sm:pl-6">
     <div class="flex" :class="align">
       <p class="leading-none mr-2" :class="tw">
         <slot></slot>

@@ -4,12 +4,15 @@ import { useFieldStore } from '../store/fields.store'
 import AdminLayout from './components/AdminLayout.vue'
 import * as components from './components'
 import dayjs from 'dayjs';
+import { defineAsyncComponent } from 'vue'
 
 import './assets/style.css';
 
 
 export const AdminPlugin = {
+
   install(app, options) {
+
     const pinia = app.config.globalProperties.$pinia;
 
     for (const componentName in components) {
@@ -76,6 +79,8 @@ export const AdminPlugin = {
 
     app.config.globalProperties.$fields = {}
     app.config.globalProperties.$fields.store = () => useFieldStore(pinia)
+    app.config.globalProperties.$fields.formSerializer = options.formSerializer || null
+    app.config.globalProperties.$fields.errorParser = options.errorParser || null
 
     app.config.globalProperties.$admin.api = {}
     app.config.globalProperties.$admin.api.get = async (uri) => {
@@ -201,51 +206,65 @@ export const AdminPlugin = {
 
 }
 
-export const registerAdminRoutes = (router, app, uri = 'admin') => {
-  const { resources } = app.config.globalProperties.$admin.config
+export function registerAdminRoutes(router, app, module = null) {
+
+  const { resources, prefix } = app.config.globalProperties.$admin.config
 
   for (const resource of resources) {
     if (resource.views.includes('index')) {
-      const indexView = () => import(`/src/views/${resource.key}/${resource.key}.index.vue`)
+      const componentPath = `/src/views/${resource.key}/${resource.key}.index.vue`
+
+      const cpFn = module
+      ? module[componentPath]
+      : () => import(componentPath)
+
       router.addRoute({
-        path: `/${uri}/${resource.key}`,
+        path: `/${prefix}/${resource.key}`,
         name: `${resource.key}_index`,
-        /* @vite-ignore */
-        component: indexView,
+        component: cpFn,
         meta: { auth: true },
       })
     }
     if (resource.views.includes('add')) {
-      const addView = () => import(`/src/views/${resource.key}/${resource.key}.add.vue`)
+      const componentPath = `/src/views/${resource.key}/${resource.key}.add.vue`
+
+      const cpFn = module
+      ? module[componentPath]
+      : () => import(componentPath)
 
       router.addRoute({
-        path: `/${uri}/${resource.key}/add`,
+        path: `/${prefix}/${resource.key}/add`,
         name: `${resource.key}_add`,
-        /* @vite-ignore */
-        component: addView,
+        component: cpFn,
         meta: { auth: true },
       })
     }
     if (resource.views.includes('detail')) {
-      const detailView = () => import(`/src/views/${resource.key}/${resource.key}.detail.vue`)
+      const componentPath = `/src/views/${resource.key}/${resource.key}.detail.vue`
+
+      const cpFn = module
+      ? module[componentPath]
+      : () => import(componentPath)
 
       router.addRoute({
-        path: `/${uri}/${resource.key}/:id`,
+        path: `/${prefix}/${resource.key}/:id`,
         name: `${resource.key}_detail`,
-        /* @vite-ignore */
-        component: detailView,
+        component: cpFn,
         meta: { auth: true },
       })
     }
 
     if (resource.views.includes('edit')) {
-      const editView = () => import(`/src/views/${resource.key}/${resource.key}.edit.vue`)
+      const componentPath = `/src/views/${resource.key}/${resource.key}.edit.vue`
+
+      const cpFn = module
+      ? module[componentPath]
+      : () => import(componentPath)
 
       router.addRoute({
-        path: `/${uri}/${resource.key}/:id/edit`,
+        path: `/${prefix}/${resource.key}/:id/edit`,
         name: `${resource.key}_edit`,
-        /* @vite-ignore */
-        component: editView,
+        component: cpFn,
         meta: { auth: true },
       })
     }

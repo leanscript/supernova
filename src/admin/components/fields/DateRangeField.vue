@@ -2,24 +2,14 @@
   <div>
     <label class="block text-sm font-medium text-gray-700">{{ name }}</label>
     <div class="mt-1 flex rounded-md shadow-sm">
-      <DatePicker
+      <RangePicker
         v-model="value"
-        class="w-full"
-        color="custom"
-        :columns="2"
-        is-range
-        style="margin-top: 40px; position: absolute !important; z-index: 1000"
-        v-if="showPicker" />
-      <input
-        @click="showPicker = !showPicker"
-        class="form-input w-full flex flex-grow border-gray-300 rounded-md focus:border-mana-blue-500 focus:ring-mana-blue-500 sm:text-sm"
-        :placeholder="placeholder"
-        :value="displayValue" />
+      />
     </div>
   </div>
 </template>
 <script setup>
-  import { DatePicker } from 'v-calendar'
+  import { RangePicker } from '@leanscript/vtc'
 </script>
 <script>
 import { useFieldStore } from '../../../store/fields.store'
@@ -41,8 +31,8 @@ export default {
   data() {
     return {
       value: {
-        start: null,
-        end: null,
+        first: null,
+        last: null,
       },
       showPicker: false,
       displayValue: null,
@@ -52,7 +42,7 @@ export default {
     ...mapActions(useFieldStore, ['registerField']),
     formatDate(date) {
       if (date) {
-        return dayjs(date).unix()
+        return date.value.toISOString()
       }
       return null
     },
@@ -76,7 +66,7 @@ export default {
       this.startId,
       this.initStartDate,
       'date',
-      () => this.formatDate(this.value.start),
+      () => this.formatDate(this.value.first),
       false,
       this.validation,
     )
@@ -84,42 +74,21 @@ export default {
       this.endId,
       this.initEndDate,
       'date',
-      () => this.formatDate(this.value.end),
+      () => this.formatDate(this.value.last),
       false,
       this.validation,
     )
 
-    if (initValue) this.value = initValue
+    if (this.initStartDate) {
+      const date = dayjs(this.initStartDate)
+      this.value.first = { id: date.valueOf(), value: date, type: 'date' }
+    }
+
+    if (this.initEndDate) {
+      const date = dayjs(this.initEndDate)
+      this.value.last = { id: date.valueOf(), value: date, type: 'date' }
+    }
   },
 }
 </script>
 
-<style>
-.style-chooser .vs__search::placeholder,
-.style-chooser .vs__dropdown-toggle,
-.style-chooser .vs__dropdown-menu {
-  border: 1px solid rgb(209 213 219);
-  padding-top: 2px;
-  margin-bottom: 4px !important;
-  color: #6b7280;
-  @apply text-sm;
-}
-
-.style-chooser .vs__clear,
-.style-chooser .vs__open-indicator {
-  fill: #394066;
-}
-
-.vc-custom {
-  --vc-accent-50:  var(--sn-primary);
-  --vc-accent-100: var(--sn-primary);
-  --vc-accent-200: var(--sn-primary);
-  --vc-accent-300: var(--sn-primary);
-  --vc-accent-400: var(--sn-primary);
-  --vc-accent-500: var(--sn-primary);
-  --vc-accent-600: var(--sn-primary);
-  --vc-accent-700: var(--sn-primary);
-  --vc-accent-800: var(--sn-primary);
-  --vc-accent-900: var(--sn-primary);
-}
-</style>

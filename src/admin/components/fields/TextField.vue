@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label :for="id" class="block text-sm font-medium text-gray-700">{{ name }}</label>
+    <label :for="id" class="block text-sm font-medium text-gray-700 dark:text-white">{{ name }}</label>
     <div class="mt-1 flex rounded-md shadow-sm">
       <input
         type="text"
@@ -9,9 +9,10 @@
         :placeholder="placeholder"
         v-model="fields[id].value"
         autocomplete="off"
-        class="form-input flex-grow border-gray-300 rounded-md focus:border-sn-secondary focus:ring-sn-secondary sm:text-sm"
+        class="form-input flex-grow border-gray-300 dark:bg-slate-900 dark:border-slate-900 rounded-md focus:border-sn-secondary focus:ring-sn-secondary sm:text-sm"
         :disabled="disabled" />
     </div>
+    <p class="mt-2 text-xs text-red-600" :key="i" v-for="(error, i) in fields[id].errors">{{ name }} {{ error.substr(4) }}</p>
   </div>
 </template>
 

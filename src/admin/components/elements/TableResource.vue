@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800">
       <div class="sm:flex sm:items-center">
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none"></div>
       </div>
       <div class="flex w-full justify-end">
         <div class="sm:flex-auto">
-          <h1 class="text-xl font-semibold text-gray-900">
+          <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
             {{ title }}
           </h1>
-          <p class="mt-2 text-sm text-gray-700" v-if="subtitle">
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-100" v-if="subtitle">
             {{ subtitle }}
           </p>
         </div>
@@ -33,16 +33,16 @@
           <slot name="row-actions" />
         </div>
       </div>
-      <div class="-mx-4 mt-4 border ring-1 ring-black ring-opacity-5 rounded sm:-mx-6 md:mx-0">
+      <div class="-mx-4 mt-4 border dark:border-slate-900 ring-1 ring-black ring-opacity-5 rounded sm:-mx-6 md:mx-0">
         <table class="min-w-full">
           <thead class="resource-table-header text-md my-4">
-            <tr>
+            <tr class="tr-head">
               <th scope="col"></th>
               <slot name="table-head" />
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
+          <tbody class="tbody-class divide-y divide-gray-200 dark:divide-slate-900 bg-white dark:bg-slate-800">
             <slot name="table-body" />
           </tbody>
         </table>
@@ -157,3 +157,8 @@ export default {
   },
 }
 </script>
+<style>
+  tr.tr-head > th {
+    @apply dark:text-white;
+  }
+</style>

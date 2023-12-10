@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+    class="flex items-center justify-between border-t border-gray-200 dark:bg-slate-800 dark:border-slate-700 bg-white px-4 py-3 sm:px-6"
     aria-label="Pagination">
     <div class="hidden sm:block" v-if="resources.length">
       <p class="text-sm text-gray-700">
@@ -17,7 +17,7 @@
       <button
         v-if="pagination.current_page !== 1"
         @click="previousPage"
-        class="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 mr-4">
+        class="relative ml-3 inline-flex items-center rounded-md bg-white dark:bg-sn-accent dark:text-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 mr-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -35,7 +35,7 @@
       <button
         v-if="pagination.current_page !== pagination.last_page"
         @click="nextPage"
-        class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+        class="relative inline-flex items-center rounded-md bg-white dark:bg-sn-accent dark:text-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
         Suivant
         <svg
           xmlns="http://www.w3.org/2000/svg"

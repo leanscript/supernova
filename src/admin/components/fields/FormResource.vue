@@ -1,8 +1,8 @@
 <template>
   <div class="mt-10">
     <div class="space-y-6 mx-auto sm:px-6 lg:col-span-9 lg:px-0">
-      <div :class="nested ? '' : 'shadow-md border'" class="sm:rounded-md">
-        <div class="space-y-6 bg-white py-6 px-4 sm:p-6">
+      <div :class="nested ? '' : 'shadow-md border dark:border-slate-900'" class="sm:rounded-md">
+        <div class="space-y-6 dark:bg-slate-800 bg-white py-6 px-4 sm:p-6">
           <slot></slot>
         </div>
         <div class="flex justify-end mx-auto">
@@ -10,7 +10,7 @@
           <button
             @click="submitForm"
             type="submit"
-            class="rounded-md border border-transparent !bg-sn-secondary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sn-primary focus:outline-none focus:ring-2 focus:ring-sn-secondary focus:ring-offset-2 mx-4 my-4">
+            class="rounded-md border border-transparent bg-sn-accent py-2 px-4 text-sm font-medium text-sn-text shadow-sm hover:bg-sn-accent-lighter focus:outline-none focus:ring-2 focus:ring-sn-secondary focus:ring-offset-2 mx-4 my-4">
             {{ saveLabel }}
           </button>
         </div>
@@ -22,6 +22,7 @@
 import { useFieldStore } from '../../../store/fields.store'
 import { useAdminStore } from '../../../store/admin.store'
 import { mapState } from 'pinia'
+import validateData from '../../validator.js';
 
 export default {
   name: 'FormResource',
@@ -43,6 +44,7 @@ export default {
   },
   methods: {
     async submitForm() {
+
       const output = await Promise.all(
         Object.keys(this.fields).map(async (el) => {
           const target = this.fields[el]
@@ -53,6 +55,20 @@ export default {
           return { id: el, type: target.type, value: await value }
         }),
       )
+
+      const toValidation = output.map(field => {
+        if(this.fields[field.id]) {
+          return { ...field, validation: this.fields[field.id].validation }
+        }
+      });
+
+      const errors = validateData(toValidation)
+
+      Object.entries(errors).forEach((el) => {
+        this.fields[el[0]].errors = el[1].errors
+      })
+
+      if(Object.keys(errors).length) return
 
       if (this.edit) {
         try {
@@ -87,7 +103,11 @@ export default {
         }
       } else {
         try {
-          await this.$admin.addOne(this.target, output)
+          let data = output
+          if(this.$fields.formSerializer) {
+            data = this.$fields.formSerializer(output)
+          }
+          await this.$admin.addOne(this.target, data)
           this.$layout.openToast({
             title: 'Ressource créée avec succès',
             type: 'succès',
@@ -99,11 +119,16 @@ export default {
             this.$emit('form_success')
           }
         } catch(e) {
-          const { status, statusText} = e.response
+          const { status, statusText, data} = e.response
           this.$layout.openToast({
             title: 'Une erreur est survenue',
             subtitle: `${statusText} (${status})`,
             type: 'error'
+          })
+          let errors = this.$fields.errorParser(data)
+          console.log(errors)
+          Object.entries(errors).forEach((el) => {
+            this.fields[el[0]].errors = el[1].errors
           })
         }
       }

@@ -37,5 +37,5 @@ export {
   TableItemCol,
   CardListPanelEmptyState,
   QuickView,
-  EmptyImage,
+  EmptyImage
 }

@@ -10,7 +10,7 @@ export const useAdminStore = defineStore('adminStore', {
     query: {},
     _filters: {},
     _sort: {},
-    filtersDict: [],
+    filtersDict: []
   }),
   actions: {
     setTarget(resource) {
@@ -117,6 +117,6 @@ export const useAdminStore = defineStore('adminStore', {
       } else {
         this.selected.push(newSelected)
       }
-    },
-  },
+    }
+  }
 })

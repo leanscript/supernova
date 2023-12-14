@@ -27,5 +27,5 @@ export {
   DisabledField,
   LeaveToggleField,
   MoneyField,
-  SelectAsyncField,
+  SelectAsyncField
 }

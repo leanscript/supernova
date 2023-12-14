@@ -9,17 +9,22 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    }
+  },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.js"),
+      entry: path.resolve(__dirname, "src/index.ts"),
       name: 'supernova',
-      formats: ['es', 'umd']
     },
     rollupOptions: {
-      external: ["vue", "pinia", "@tailwindcss", "yup", "autoprefixer", "postcss", "tailwindcss"],
+      external: ["vue", "vue-router", "pinia", "@tailwindcss", "yup", "autoprefixer", "postcss", "tailwindcss"],
       output: {
         globals: {
           vue: "Vue",
+          'vue-router': "vueRouter",
           pinia: "pinia"
         }
       }

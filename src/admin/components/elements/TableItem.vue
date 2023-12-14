@@ -1,16 +1,19 @@
 <template>
   <tr
-    class="focus:outline-none border border-gray-100 dark:border-slate-900 cursor-pointer rounded hover:bg-sn-transparent transition">
+    class="focus:outline-none border border-gray-100 dark:border-slate-900 cursor-pointer rounded hover:bg-sn-transparent transition"
+  >
     <td v-if="selectable" @click="selectLine">
       <div class="ml-5">
         <div
-          class="bg-gray-200 rounded-sm w-3 h-3 flex flex-shrink-0 justify-center items-center relative">
+          class="bg-gray-200 rounded-sm w-3 h-3 flex flex-shrink-0 justify-center items-center relative"
+        >
           <input
             class="w-3 h-3"
             type="checkbox"
             :name="`item_${id}`"
             :value="isSelected"
-            :checked="isSelected" />
+            :checked="isSelected"
+          />
         </div>
       </div>
     </td>
@@ -22,9 +25,12 @@
         <div class="relative">
           <div
             style="margin-left: -2.2rem"
-            class="absolute z-40 opacity-100 bottom-100 mb-2 left-0 min-w-full -mt-6 detail-btn-tooltip hidden transition duration-150 ease-out">
+            class="absolute z-40 opacity-100 bottom-100 mb-2 left-0 min-w-full -mt-6 detail-btn-tooltip hidden transition duration-150 ease-out"
+          >
             <div class="relative shadow-md">
-              <div class="bg-sn-secondary border-1 -mt-8 text-sn-text truncate text-xs rounded-md py-2 px-4">
+              <div
+                class="bg-sn-secondary border-1 -mt-8 text-sn-text truncate text-xs rounded-md py-2 px-4"
+              >
                 Voir le détail
               </div>
             </div>
@@ -37,9 +43,12 @@
         <div class="relative">
           <div
             style="margin-left: -2.2rem"
-            class="absolute z-40 opacity-100 bottom-100 mb-2 left-0 min-w-full -mt-6 edit-btn-tooltip hidden transition duration-150 ease-out">
+            class="absolute z-40 opacity-100 bottom-100 mb-2 left-0 min-w-full -mt-6 edit-btn-tooltip hidden transition duration-150 ease-out"
+          >
             <div class="relative shadow-md">
-              <div class="bg-sn-secondary border-1 -mt-8 text-sn-text truncate text-xs rounded-md py-2 px-4">
+              <div
+                class="bg-sn-secondary border-1 -mt-8 text-sn-text truncate text-xs rounded-md py-2 px-4"
+              >
                 Modifier
               </div>
             </div>
@@ -50,24 +59,26 @@
       <TrashIcon
         v-if="deleteBtn"
         @click="openDeleteModale(itemData)"
-        class="font-bold fill-gray-400 hover:fill-red-500 w-6 h-6 mx-1" />
+        class="font-bold fill-gray-400 hover:fill-red-500 w-6 h-6 mx-1"
+      />
 
       <button
         v-if="quickViewBtn"
         @click="openQuickViewIsOpen(itemData)"
-        class="flex font-medium ml-2 mr-2 text-gray-500">
+        class="flex font-medium ml-2 mr-2 text-gray-500"
+      >
         <BoltIcon class="font-bold fill-gray-400 w-6 h-6 mx-1" />
         <span class="mt-1">Aperçu</span>
       </button>
     </td>
   </tr>
 </template>
-<script setup>
+<script setup lang="ts">
 import { EyeIcon, Cog8ToothIcon, TrashIcon, BoltIcon } from '@heroicons/vue/24/solid'
 </script>
-<script>
-import { useAdminStore } from '../../../store/admin.store'
-import { useLayoutStore } from '../../../store/layout.store'
+<script lang="ts">
+import { useAdminStore } from '@/store/admin.store'
+import { useLayoutStore } from '@/store/layout.store'
 import { mapState, mapActions } from 'pinia'
 
 export default {
@@ -79,12 +90,12 @@ export default {
     quickViewBtn: { type: Boolean, required: false, default: false },
     detailBtn: { type: Boolean, required: false, default: true },
     relation: { type: Boolean, required: false, default: false },
-    selectable: { type: Boolean, required: false, default: true },
+    selectable: { type: Boolean, required: false, default: true }
   },
   data() {
     return {
       dropdownIsOpen: false,
-      hover: false,
+      hover: false
     }
   },
   computed: {
@@ -92,7 +103,7 @@ export default {
       resource: 'resource',
       resources: 'resources',
       selected: 'selected',
-      target: 'target',
+      target: 'target'
     }),
     ...mapState(useLayoutStore, ['deleteModaleIsOpen']),
     isSelected() {
@@ -106,14 +117,14 @@ export default {
     },
     itemData() {
       return this.resources.find((el) => el[this.$admin.primaryKey] === this.id)
-    },
+    }
   },
   methods: {
     ...mapActions(useAdminStore, ['toggleSelected']),
     ...mapActions(useLayoutStore, ['openDeleteModale', 'openQuickViewIsOpen']),
     selectLine() {
       this.toggleSelected(this.target, this.id)
-    },
-  },
+    }
+  }
 }
 </script>

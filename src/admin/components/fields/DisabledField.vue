@@ -9,13 +9,14 @@
         :value="displayValue"
         autocomplete="off"
         class="form-input flex-grow border-gray-300 rounded-md focus:border-mana-blue-500 focus:ring-mana-blue-500 sm:text-sm bg-gray-200 cursor-none"
-        disabled />
+        disabled
+      />
     </div>
   </div>
 </template>
 
-<script>
-import { useFieldStore } from '../../../store/fields.store'
+<script lang="ts">
+import { useFieldStore } from '@/store/fields.store'
 import { mapState, mapActions } from 'pinia'
 
 export default {
@@ -27,22 +28,22 @@ export default {
     placeholder: { type: String, required: false, default: '' },
     initValue: { type: String, required: false, default: '' },
     displayValue: { type: String, required: true },
-    validation: { type: Object, required: false, default: () => null },
+    validation: { type: Object, required: false, default: () => null }
   },
   data() {
     return {
-      value: null,
+      value: null
     }
   },
   methods: {
-    ...mapActions(useFieldStore, ['registerField']),
+    ...mapActions(useFieldStore, ['registerField'])
   },
   computed: {
-    ...mapState(useFieldStore, ['fields']),
+    ...mapState(useFieldStore, ['fields'])
   },
   created() {
     this.registerField(this.id, this.initValue, 'text', null, false, this.validation)
     if (this.initValue) this.value = this.initValue
-  },
+  }
 }
 </script>

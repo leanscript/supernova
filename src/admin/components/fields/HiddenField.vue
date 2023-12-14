@@ -1,32 +1,20 @@
 <template>
   <div></div>
 </template>
+<script lang="ts" setup>
+import { useFieldStore } from '@/store/fields.store'
+import { ref, defineProps, computed, onBeforeMount } from 'vue'
 
-<script>
-import { useFieldStore } from '../../../store/fields.store'
-import { mapState, mapActions } from 'pinia'
+const fieldStore = useFieldStore()
 
-export default {
-  name: 'HiddenField',
-  field: true,
-  props: {
-    id: { type: String, required: true },
-    initValue: { type: String, required: false, default: '' },
-  },
-  data() {
-    return {
-      value: null,
-    }
-  },
-  methods: {
-    ...mapActions(useFieldStore, ['registerField']),
-  },
-  computed: {
-    ...mapState(useFieldStore, ['fields']),
-  },
-  created() {
-    this.value = this.initValue
-    this.registerField(this.id, this.initValue, 'hidden', () => this.value, false)
-  },
-}
+const value = ref(null)
+const props = defineProps({
+  id: { type: String, required: true },
+  initValue: { type: String, required: false, default: '' }
+})
+
+onBeforeMount(() => {
+  value.value = props.initValue
+  fieldStore.registerField(props.id, props.initValue, 'hidden', () => value.value, false)
+})
 </script>

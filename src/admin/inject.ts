@@ -1,23 +1,19 @@
-import { useLayoutStore } from '../store/layout.store'
-import { useAdminStore } from '../store/admin.store'
-import { useFieldStore } from '../store/fields.store'
-import AdminLayout from './components/AdminLayout.vue'
+import { useLayoutStore } from '@/store/layout.store'
+import { useAdminStore } from '@/store/admin.store'
+import { useFieldStore } from '@/store/fields.store'
+import AdminLayout from '@/admin/components/AdminLayout.vue'
 import * as components from './components'
-import dayjs from 'dayjs';
-import { defineAsyncComponent } from 'vue'
+import dayjs from 'dayjs'
 
-import './assets/style.css';
-
+import '@/admin/assets/style.css'
 
 export const AdminPlugin = {
-
   install(app, options) {
-
-    const pinia = app.config.globalProperties.$pinia;
+    const pinia = app.config.globalProperties.$pinia
 
     for (const componentName in components) {
       const component = components[componentName]
-      app.component(component.name, component)
+      app.component(componentName, component)
     }
 
     app.component('AdminLayout', AdminLayout)
@@ -60,7 +56,7 @@ export const AdminPlugin = {
 
     app.config.globalProperties.$layout.clearToast = (id) => {
       const store = app.config.globalProperties.$layout.store()
-      store.toasts = store.toasts.filter(el => el.id !== id)
+      store.toasts = store.toasts.filter((el) => el.id !== id)
     }
 
     app.config.globalProperties.$auth = {}
@@ -122,7 +118,7 @@ export const AdminPlugin = {
       resource,
       id,
       include = null,
-      query = null,
+      query = null
     ) => {
       const store = app.config.globalProperties.$admin.store()
       const axiosInstance = app.config.globalProperties.$admin.axios
@@ -175,7 +171,6 @@ export const AdminPlugin = {
       return store.fields[id]
     }
 
-
     app.config.globalProperties.$resources = {}
 
     app.config.globalProperties.$resources.all = () => {
@@ -202,8 +197,7 @@ export const AdminPlugin = {
     app.provide('$admin', app.config.globalProperties.$admin)
     app.provide('$resources', app.config.globalProperties.$resources)
     app.provide('$layout', app.config.globalProperties.$layout)
-  },
-
+  }
 }
 
 export function registerAdminRoutes(router, app, module = null) {
@@ -213,59 +207,43 @@ export function registerAdminRoutes(router, app, module = null) {
   for (const resource of resources) {
     if (resource.views.includes('index')) {
       const componentPath = `/src/views/${resource.key}/${resource.key}.index.vue`
-
-      const cpFn = module
-      ? module[componentPath]
-      : () => import(componentPath)
-
+      const cpFn = module ? module[componentPath] : () => import(componentPath)
       router.addRoute({
         path: `/${prefix}/${resource.key}`,
         name: `${resource.key}_index`,
         component: cpFn,
-        meta: { auth: true },
+        meta: { auth: true }
       })
     }
     if (resource.views.includes('add')) {
       const componentPath = `/src/views/${resource.key}/${resource.key}.add.vue`
-
-      const cpFn = module
-      ? module[componentPath]
-      : () => import(componentPath)
-
+      const cpFn = module ? module[componentPath] : () => import(componentPath)
       router.addRoute({
         path: `/${prefix}/${resource.key}/add`,
         name: `${resource.key}_add`,
         component: cpFn,
-        meta: { auth: true },
+        meta: { auth: true }
       })
     }
     if (resource.views.includes('detail')) {
       const componentPath = `/src/views/${resource.key}/${resource.key}.detail.vue`
-
-      const cpFn = module
-      ? module[componentPath]
-      : () => import(componentPath)
-
+      const cpFn = module ? module[componentPath] : () => import(componentPath)
       router.addRoute({
         path: `/${prefix}/${resource.key}/:id`,
         name: `${resource.key}_detail`,
         component: cpFn,
-        meta: { auth: true },
+        meta: { auth: true }
       })
     }
 
     if (resource.views.includes('edit')) {
       const componentPath = `/src/views/${resource.key}/${resource.key}.edit.vue`
-
-      const cpFn = module
-      ? module[componentPath]
-      : () => import(componentPath)
-
+      const cpFn = module ? module[componentPath] : () => import(componentPath)
       router.addRoute({
         path: `/${prefix}/${resource.key}/:id/edit`,
         name: `${resource.key}_edit`,
         component: cpFn,
-        meta: { auth: true },
+        meta: { auth: true }
       })
     }
   }

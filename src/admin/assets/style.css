@@ -11,7 +11,6 @@
   --sn-accent-lighter: #d91e1899;
 }
 
-
 .resource-table-header th {
   @apply py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6;
 }
@@ -27,11 +26,11 @@
 .toggle-checkbox:checked {
   @apply right-0 border-green-400;
   right: 0;
-  border-color: #68D391;
+  border-color: #68d391;
 }
 .toggle-checkbox:checked + .toggle-label {
   @apply bg-green-400;
-  background-color: #68D391;
+  background-color: #68d391;
 }
 
 .vc-bar {
@@ -54,15 +53,14 @@
 }
 
 details > summary {
-    list-style: none;
-    cursor: pointer;
-    outline: none;
+  list-style: none;
+  cursor: pointer;
+  outline: none;
 
-    &::-webkit-details-marker {
-        display: none;
-    }
+  &::-webkit-details-marker {
+    display: none;
+  }
 }
-
 
 .resource-table-header th {
   @apply py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6;
@@ -79,11 +77,11 @@ details > summary {
 .toggle-checkbox:checked {
   @apply right-0 border-green-400;
   right: 0;
-  border-color: #68D391;
+  border-color: #68d391;
 }
 .toggle-checkbox:checked + .toggle-label {
   @apply bg-green-400;
-  background-color: #68D391;
+  background-color: #68d391;
 }
 
 .vc-bar {

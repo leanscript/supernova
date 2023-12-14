@@ -10,17 +10,17 @@ export const useLayoutStore = defineStore('layout', {
     quickViewData: null,
     defaultFilter: false,
     shrink: false,
-    toasts: [],
+    toasts: []
   }),
   actions: {
     setTitle(title) {
       this.title = title
     },
     openToast(data) {
-      const id = Math.floor(Math.random()*100)
+      const id = Math.floor(Math.random() * 100)
       this.toasts.push({ id, ...data })
       setTimeout(() => {
-        this.toasts = this.toasts.filter(el => el.id !== id)
+        this.toasts = this.toasts.filter((el) => el.id !== id)
       }, 6000)
     },
     setBreadcrumb(breadcrumb) {
@@ -55,6 +55,6 @@ export const useLayoutStore = defineStore('layout', {
     },
     setDefaultFilter(filter) {
       this.defaultFilter = filter
-    },
-  },
+    }
+  }
 })

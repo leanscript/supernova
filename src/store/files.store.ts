@@ -7,6 +7,6 @@ export const useFilesStore = defineStore('filesStore', {
       if (file.type !== 'dir') {
         this.selectedFile = file
       }
-    },
-  },
+    }
+  }
 })

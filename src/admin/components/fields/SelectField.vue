@@ -8,7 +8,8 @@
         class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sn-primary sm:text-sm sm:leading-6"
         aria-haspopup="listbox"
         aria-expanded="true"
-        aria-labelledby="listbox-label">
+        aria-labelledby="listbox-label"
+      >
         <span class="block truncate">{{ value ? value.label : placeholder }}</span>
         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <ChevronUpDownIcon class="h-5 w-5 text-gray-400" />
@@ -20,7 +21,8 @@
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"
-        aria-activedescendant="listbox-option-3">
+        aria-activedescendant="listbox-option-3"
+      >
         <li
           v-for="(item, i) in options"
           :key="i"
@@ -31,18 +33,19 @@
               : ' hover:bg-sn-transparent'
           "
           class="text-gray-900 text-sm relative select-none py-2 pl-3 pr-9 cursor-pointer"
-          role="option">
+          role="option"
+        >
           <span class="font-normal block truncate">{{ item.label }}</span>
         </li>
       </ul>
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ChevronUpDownIcon } from '@heroicons/vue/24/solid'
 </script>
-<script>
-import { useFieldStore } from '../../../store/fields.store'
+<script lang="ts">
+import { useFieldStore } from '@/store/fields.store'
 import { mapState, mapActions } from 'pinia'
 
 export default {
@@ -54,12 +57,12 @@ export default {
     placeholder: { type: String, required: false, default: '' },
     initValue: { type: Object, required: false, default: () => {} },
     validation: { type: Object, required: false, default: () => null },
-    options: { type: Array, required: true, default: () => [] },
+    options: { type: Array, required: true, default: () => [] }
   },
   data() {
     return {
       value: null,
-      selectIsOpen: false,
+      selectIsOpen: false
     }
   },
   methods: {
@@ -67,10 +70,10 @@ export default {
     selectValue(item) {
       this.value = item
       this.selectIsOpen = false
-    },
+    }
   },
   computed: {
-    ...mapState(useFieldStore, ['fields']),
+    ...mapState(useFieldStore, ['fields'])
   },
   created() {
     this.registerField(
@@ -79,10 +82,10 @@ export default {
       'select',
       () => this.value && this.value.key,
       false,
-      this.validation,
+      this.validation
     )
     if (this.initValue) this.value = this.initValue
-  },
+  }
 }
 </script>
 

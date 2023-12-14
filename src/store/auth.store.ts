@@ -7,14 +7,13 @@ export const useAuthStore = defineStore('authStore', {
     async getUserInfos(userData) {
       this.user = userData
       if (this.user) this.isAuthentified = true
-      return this.user
-      return {}
+      return this.user || {}
     },
     async logout() {
       this.isAuthentified = false
       this.user = {}
       this.token = null
       localStorage.removeItem('supernova_token')
-    },
-  },
+    }
+  }
 })

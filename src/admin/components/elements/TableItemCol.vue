@@ -8,12 +8,11 @@
   </td>
 </template>
 
-<script>
-export default {
-  name: 'TableItemCol',
-  props: {
-    tw: { type: String, required: false, default: '' },
-    align: { type: String, required: false, default: 'items-center' },
-  },
-}
+<script lang="ts" setup>
+import { defineProps } from 'vue'
+
+const { tw, align } = defineProps({
+  tw: { type: String, required: false, default: '' },
+  align: { type: String, required: false, default: 'items-center' }
+})
 </script>

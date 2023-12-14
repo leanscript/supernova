@@ -1,6 +1,5 @@
 export {
   AddResourceButton,
-  // Breadcrumb,
   FilterResource,
   SearchResource,
   SortResource,
@@ -18,7 +17,7 @@ export {
   QuickView,
   TableRelation,
   CardTableList,
-  CardListPanelEmptyState,
+  CardListPanelEmptyState
 } from './elements'
 
 export {
@@ -35,5 +34,9 @@ export {
   MoneyField,
   SelectAsyncField,
   LeaveToggleField,
-  DateRangeField,
+  DateRangeField
 } from './fields'
+
+import AdminLayout from '@/admin/components/AdminLayout.vue'
+
+export { AdminLayout }

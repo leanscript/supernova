@@ -7,9 +7,19 @@
         class="mx-auto max-w-xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
       >
         <div class="relative">
-          <MagnifyingGlassIcon
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
             class="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
-          />
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
           <input
             type="text"
             v-focus
@@ -25,7 +35,19 @@
           v-if="!search.length"
           class="border-t border-gray-100 px-6 py-14 text-center text-sm sm:px-14"
         >
-          <MagnifyingGlassIcon class="mx-auto h-6 w-6 text-gray-400" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="mx-auto h-6 w-6 text-gray-400"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
           <p class="mt-4 font-semibold text-gray-900">Rechercher parmis les resources</p>
           <p class="mt-2 text-gray-500">
             Accédez rapidement aux resources en effectuant une recherche globale.
@@ -136,7 +158,19 @@
           v-if="noResults"
           class="border-t border-gray-100 px-6 py-14 text-center text-sm sm:px-14"
         >
-          <FaceFrownIcon class="mx-auto h-6 w-6 text-gray-400" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="mx-auto h-6 w-6 text-gray-400"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm-4.34 7.964a.75.75 0 01-1.061-1.06 5.236 5.236 0 013.73-1.538 5.236 5.236 0 013.695 1.538.75.75 0 11-1.061 1.06 3.736 3.736 0 00-2.639-1.098 3.736 3.736 0 00-2.664 1.098z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
           <p class="mt-4 font-semibold text-gray-900">Aucun résultat pour la recherche</p>
           <p class="mt-2 text-gray-500">
             Nous n'avons rien trouvé qui corresponde à ce terme. Veuillez réessayer.
@@ -154,7 +188,6 @@
 </template>
 <script setup lang="ts">
 import { ref, watch, inject, computed } from 'vue'
-import { MagnifyingGlassIcon, FaceFrownIcon } from '@heroicons/vue/24/solid'
 
 const $admin = inject('$admin')
 

@@ -121,34 +121,37 @@
     <Pagination />
   </div>
 </template>
-
-<script lang="ts">
+<script lang="ts" setup>
 import { useLayoutStore } from '@/store/layout.store'
 import { useAdminStore } from '@/store/admin.store'
-import { mapState, mapActions } from 'pinia'
+import { computed, defineProps, define } from 'vue'
 
-export default {
-  name: 'TableRelation',
-  computed: {
-    ...mapState(useLayoutStore, ['deleteModaleIsOpen', 'quickViewIsOpen', 'deleteModaleData']),
-    ...mapState(useAdminStore, ['target', 'resources'])
-  },
-  methods: {
-    ...mapActions(useLayoutStore, ['closeDeleteModale', 'closeQuickViewIsOpen']),
-    deleteItem() {
-      this.$admin.deleteOne(this.target, this.deleteModaleData.id)
-      this.$admin.getManyResources(this.target)
-      this.closeDeleteModale()
-      this.$layout.openToast({
-        title: 'Resource supprimée avec succès',
-        type: 'error'
-      })
-    }
-  },
-  props: {
-    displayLabel: { type: String, required: true },
-    title: { type: String, required: true },
-    subtitle: { type: String, required: false, default: null }
-  }
+const $admin = inject('$admin')
+const $layout = inject('$layout')
+
+const {
+  deleteModaleIsOpen,
+  quickViewIsOpen,
+  deleteModaleData,
+  closeDeleteModale,
+  closeQuickViewIsOpen
+} = useLayoutStore()
+
+const { target, resources } = useAdminStore()
+
+const { displayLabel, title, subtitle } = defineProps({
+  displayLabel: { type: String, required: true },
+  title: { type: String, required: true },
+  subtitle: { type: String, required: false, default: null }
+})
+
+const deleteItem = () => {
+  $admin.deleteOne(this.target, this.deleteModaleData.id)
+  $admin.getManyResources(this.target)
+  closeDeleteModale()
+  $layout.openToast({
+    title: 'Resource supprimée avec succès',
+    type: 'error'
+  })
 }
 </script>

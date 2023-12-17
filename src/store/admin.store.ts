@@ -85,7 +85,7 @@ export const useAdminStore = defineStore('adminStore', {
     removeFilter(filter) {
       const { key, value } = filter
 
-      this._filters[key] = this._filters[key].filter((el) => el !== value)
+      this._filters[key].splice(this._filters[key].indexOf(value), 1)
 
       let queryString = []
       Object.entries(this._filters).forEach((el) => {

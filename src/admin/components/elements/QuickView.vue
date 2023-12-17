@@ -64,9 +64,5 @@
 <script lang="ts" setup>
 import { useLayoutStore } from '@/store/layout.store'
 import { defineProps } from 'vue'
-
 const layoutStore = useLayoutStore()
-const { title } = defineProps({
-  title: { type: String, required: true }
-})
 </script>

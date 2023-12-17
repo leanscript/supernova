@@ -40,12 +40,15 @@ const hasActiveFilters = computed(() => {
 })
 
 const activeFilters = computed(() => {
-  const arr = []
-  Object.values(adminStore._filters)
-    .filter((el) => el.length > 0)
-    .forEach((el) => arr.push(...el))
-
-  return arr.map((el) => adminStore.filtersDict.find((item) => item.value === el))
+  let arr = []
+  Object.entries(adminStore._filters)
+    .filter((el) => el[1].length)
+    .forEach((el) => {
+      arr = [...arr, ...el[1].map((val) => ({ key: el[0], value: val }))]
+    })
+  return arr.map((el) =>
+    adminStore.filtersDict.find((item) => item.key === el.key && item.value === el.value)
+  )
 })
 
 const deleteFilter = (filter) => {

@@ -1,9 +1,11 @@
 import { AdminPlugin, registerAdminRoutes } from '@/admin/inject'
-import AuthPlugin from './auth'
-import { ResourceIndexMixin } from '@/admin/mixins/resourceIndex.mixin'
-import { ResourceDetailMixin } from '@/admin/mixins/resourceDetail.mixin'
-import { ResourceIndexComp } from '@/admin/mixins/resourceIndex'
-import { ResourceDetailComp } from '@/admin/mixins/resourceDetail'
+import AuthPlugin from '@/auth'
+import { ResourceIndexMixin } from '@/mixins/resourceIndex.mixin'
+import { ResourceDetailMixin } from '@/mixins/resourceDetail.mixin'
+import SidebarItem from '@/admin/components/SidebarItem.vue'
+import TopbarItem from '@/admin/components/TopbarItem.vue'
+
+const registerSupernovaRoutes = () => {}
 
 export {
   AdminPlugin,
@@ -12,10 +14,11 @@ export {
   ResourceIndexMixin,
   ResourceDetailMixin,
   ResourceIndexComp,
-  ResourceDetailComp
+  ResourceDetailComp,
+  SidebarItem,
+  TopbarItem,
+  registerSupernovaRoutes
 }
+
 export * from './store'
-
-import SidebarItem from '@/admin/components/SidebarItem.vue'
-
-export { SidebarItem }
+export * from './composables'

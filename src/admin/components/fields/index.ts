@@ -8,7 +8,6 @@ import EditorField from './EditorField.vue'
 import DateField from './DateField.vue'
 import DateRangeField from './DateRangeField.vue'
 import SelectAsyncField from './SelectAsyncField.vue'
-import LeaveToggleField from './LeaveToggleField.vue'
 import DisabledField from './DisabledField.vue'
 import MoneyField from './MoneyField.vue'
 import HiddenField from './HiddenField.vue'
@@ -25,7 +24,6 @@ export {
   DateField,
   DateRangeField,
   DisabledField,
-  LeaveToggleField,
   MoneyField,
   SelectAsyncField
 }

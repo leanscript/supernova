@@ -94,6 +94,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+dist_plugins
 
 # Gatsby files
 .cache/
@@ -149,3 +150,10 @@ npm-debug.log
 yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/node,vuejs
+
+# Vitepress
+.docs/.vitepress/dist
+.docs/.vitepress/cache
+
+# Project related
+todo.md

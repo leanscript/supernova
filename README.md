@@ -9,7 +9,6 @@
 - Easy config and high level of abstraction for simple & short views
 - Provide your own auth system
 - Easy form validation with Yup
-- And more to come !
 
 ## Futures compatibles plugins :
 

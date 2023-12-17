@@ -33,10 +33,12 @@ export {
   DateField,
   MoneyField,
   SelectAsyncField,
-  LeaveToggleField,
   DateRangeField
 } from './fields'
 
-import AdminLayout from '@/admin/components/AdminLayout.vue'
+import AdminLayout from './AdminLayout.vue'
+import AdminStackedLayout from './AdminStackedLayout.vue'
+import SidebarItem from './SidebarItem.vue'
+import TopbarItem from './TopbarItem.vue'
 
-export { AdminLayout }
+export { AdminLayout, AdminStackedLayout, SidebarItem, TopbarItem }

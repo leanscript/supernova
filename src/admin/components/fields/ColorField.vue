@@ -18,7 +18,7 @@
 </template>
 <script lang="ts" setup>
 import { useFieldStore } from '@/store/fields.store'
-import { defineProps, computed, onBeforeMount, ref } from 'vue'
+import { defineProps, onBeforeMount, ref } from 'vue'
 const fieldStore = useFieldStore()
 
 const props = defineProps({

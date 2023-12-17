@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <section aria-labelledby="filter-heading">
       <div class="pb-4">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4">
@@ -9,6 +9,7 @@
                 <div class="relative inline-block px-4 text-left">
                   <button
                     type="button"
+                    :id="parentId"
                     @click.stop="filterIsOpen = !filterIsOpen"
                     class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
                     aria-expanded="false"
@@ -34,6 +35,7 @@
                     </svg>
                   </button>
                   <div
+                    v-on-click-outside:[parentId]="closeDropdown"
                     v-if="filterIsOpen"
                     class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
                   >
@@ -47,7 +49,7 @@
                           type="checkbox"
                           v-model="selectedFilters[filter.value]"
                           @click="toggleFilter(filter)"
-                          class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          class="h-4 w-4 rounded border-gray-300 text-sn-primary focus:ring-sn-primary"
                         />
                         <label
                           class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900"
@@ -66,8 +68,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, ref, onBeforeMount, inject, computed, watch } from 'vue'
+import { defineProps, ref, onBeforeMount, inject, computed } from 'vue'
 import { useAdminStore } from '@/store/admin.store'
+import vOnClickOutside from '@/composables/clickOutside'
+
 const props = defineProps({
   filters: { type: Array, required: true },
   name: { type: String, required: true }
@@ -75,6 +79,8 @@ const props = defineProps({
 const filterIsOpen = ref(false)
 const adminStore = useAdminStore()
 const $admin = inject('$admin')
+
+const parentId = ref(Math.random(1, 100))
 
 const filterKey = computed(() => props.filters[0].key)
 const filterCount = computed(() => {
@@ -87,7 +93,7 @@ const filterCount = computed(() => {
 const selectedFilters = ref({})
 
 adminStore.$subscribe((mutation, state) => {
-  if (mutation.events.key === 'filter') {
+  if (mutation.events && mutation.events.key === 'filter') {
     const parsedFiltersValues = selectedFilters.value
     Object.entries(selectedFilters.value).forEach((entry) => {
       parsedFiltersValues[entry[0]] = state._filters[filterKey.value].includes(entry[0])

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10">
+  <div class="mt-0">
     <div class="space-y-6 mx-auto sm:px-6 lg:col-span-9 lg:px-0">
       <div :class="nested ? '' : 'shadow-md border dark:border-slate-900'" class="sm:rounded-md">
         <div class="space-y-6 dark:bg-slate-800 bg-white py-6 px-4 sm:p-6">
@@ -55,8 +55,8 @@ export default {
           return { id: el, type: target.type, value: await value }
         })
       )
-      console.log(output)
-      return
+      // console.log(output)
+      // return
 
       const toValidation = output.map((field) => {
         if (this.fields[field.id]) {

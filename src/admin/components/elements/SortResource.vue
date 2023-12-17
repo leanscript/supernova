@@ -118,7 +118,7 @@
 </template>
 <script lang="ts" setup>
 import { useAdminStore } from '@/store/admin.store'
-import { ref, watch, inject, computed, defineProps } from 'vue'
+import { ref, watch, inject, defineProps } from 'vue'
 const adminStore = useAdminStore()
 const $admin = inject('$admin')
 

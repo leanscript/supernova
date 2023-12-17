@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import fs from 'fs'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -11,7 +11,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   build: {
@@ -20,11 +20,11 @@ export default defineConfig({
       name: 'supernova',
     },
     rollupOptions: {
-      external: ["vue", "vue-router", "pinia", "@tailwindcss", "yup", "autoprefixer", "postcss", "tailwindcss"],
+      external: ["vue", "vue-router", "pinia", "yup"],
       output: {
         globals: {
-          vue: "Vue",
-          'vue-router': "vueRouter",
+          vue: "vue",
+          'vue-router': "vue-router",
           pinia: "pinia"
         }
       }

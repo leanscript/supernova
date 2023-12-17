@@ -3,7 +3,7 @@
 </template>
 <script lang="ts" setup>
 import { useFieldStore } from '@/store/fields.store'
-import { ref, defineProps, computed, onBeforeMount } from 'vue'
+import { ref, defineProps, onBeforeMount } from 'vue'
 
 const fieldStore = useFieldStore()
 

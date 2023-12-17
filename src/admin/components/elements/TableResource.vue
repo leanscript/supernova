@@ -7,10 +7,10 @@
       <div class="flex w-full justify-end">
         <div class="sm:flex-auto">
           <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
-            {{ title }}
+            {{ props.title }}
           </h1>
-          <p class="mt-2 text-sm text-gray-700 dark:text-gray-100" v-if="subtitle">
-            {{ subtitle }}
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-100" v-if="props.subtitle">
+            {{ props.subtitle }}
           </p>
         </div>
         <slot name="table-actions" />
@@ -52,7 +52,7 @@
         </table>
       </div>
     </div>
-    <QuickView :title="title" v-if="quickViewIsOpen" />
+    <QuickView :title="props.title" v-if="quickViewIsOpen" />
     <div
       v-if="deleteModaleIsOpen"
       class="relative z-10"
@@ -93,7 +93,7 @@
                 <div class="mt-2">
                   <p class="text-sm text-gray-500">
                     Voulez-vous vraiment supprimer la resource
-                    <span class="font-bold">"{{ deleteModaleData[displayLabel] }}"</span>
+                    <span class="font-bold">"{{ deleteModaleData[props.displayLabel] }}"</span>
                     ?
                     <br />
                     <br />
@@ -123,50 +123,51 @@
         </div>
       </div>
     </div>
-    <div v-if="!resources.length > 0 && !relation" class="bg-gray-50 rounded py-4">
+    <div v-if="!$resources.all().length" class="bg-gray-50 rounded py-4">
       <EmptyImage class="w-1/3 mx-auto h-64 mt-4" />
       <p class="font-semibold text-gray-500 text-center my-4">Il n'y a rien ici</p>
     </div>
-    <div v-if="!$slots['table-body'] && relation" class="bg-gray-50 rounded py-4">
-      <EmptyImage class="w-1/3 mx-auto h-64 mt-4" />
-      <p class="font-semibold text-gray-500 text-center my-4">Il n'y a rien ici</p>
-    </div>
-    <Pagination v-if="!relation" />
+    <Pagination v-if="!props.relation" />
   </div>
 </template>
-
-<script lang="ts">
+<script lang="ts" setup>
 import { useLayoutStore } from '@/store/layout.store'
 import { useAdminStore } from '@/store/admin.store'
-import { mapState, mapActions } from 'pinia'
+import { defineProps, inject } from 'vue'
 
-export default {
-  name: 'TableResource',
-  computed: {
-    ...mapState(useLayoutStore, ['deleteModaleIsOpen', 'quickViewIsOpen', 'deleteModaleData']),
-    ...mapState(useAdminStore, ['target', 'resources'])
-  },
-  methods: {
-    ...mapActions(useLayoutStore, ['closeDeleteModale', 'closeQuickViewIsOpen']),
-    async deleteItem() {
-      const id = this.deleteModaleData[this.$admin.primaryKey]
-      await this.$admin.deleteOne(this.target, id)
-      this.$admin.getManyResources(this.target)
-      this.closeDeleteModale()
-      this.$layout.openToast({
-        title: 'Resource supprimée avec succès',
-        type: 'error'
-      })
-    }
-  },
-  props: {
-    displayLabel: { type: String, required: true },
-    title: { type: String, required: true },
-    subtitle: { type: String, required: false, default: null },
-    relation: { type: Boolean, required: false, default: false }
-  }
+const $admin = inject('$admin')
+const $layout = inject('$layout')
+const $resources = inject('$resources')
+
+const props = defineProps({
+  displayLabel: { type: String, required: true },
+  title: { type: String, required: true },
+  subtitle: { type: String, required: false, default: null },
+  relation: { type: Boolean, required: false, default: false }
+})
+
+const {
+  deleteModaleIsOpen,
+  quickViewIsOpen,
+  deleteModaleData,
+  closeDeleteModale,
+  closeQuickViewIsOpen
+} = useLayoutStore()
+
+const { target, resources } = useAdminStore()
+
+const deleteItem = async () => {
+  const id = deleteModaleData[$admin.primaryKey]
+  await $admin.deleteOne(target, id)
+  $admin.getManyResources(target)
+  closeDeleteModale()
+  $layout.openToast({
+    title: 'Resource supprimée avec succès',
+    type: 'error'
+  })
 }
 </script>
+
 <style>
 tr.tr-head > th {
   @apply dark:text-white;
